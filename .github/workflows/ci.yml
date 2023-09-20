@@ -34,5 +34,10 @@ jobs:
       - name: Install Ansible Collection
         run: |
           pwd
-          ansible-galaxy collection install build/snowdrop-cloud_infra-$(yq -r .version galaxy.yml).tar.gz --upgrade -p $HOME/.ansible/collections
+          ansible-galaxy collection install build/snowdrop-cloud_infra-$(yq -r .version galaxy.yml).tar.gz --upgrade
+
+      - name: Run role tests
+        run: |
+          molecule test --scenario-name github
+        working-directory: roles/${{ matrix.roles }}
 ...
