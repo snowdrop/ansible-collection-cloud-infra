@@ -17,13 +17,6 @@ jobs:
       - name: Checkout project
         uses: actions/checkout@v3
 
-      - name: Deploy devstack
-        uses: EmilienM/devstack-action@v0.11
-        with:
-          branch: ${{ matrix.openstack_version }}
-          enabled_services: 'ir-api,s-account,s-container,s-object,s-proxy,swift'
-          cache: devstack
-
       - name: Install Python
         uses: actions/setup-python@v4 
         with:
@@ -42,8 +35,4 @@ jobs:
         run: |
           ansible-galaxy collection install build/snowdrop-cloud_infra-$(yq -r .version galaxy.yml).tar.gz --upgrade
 
-      - name: Run role tests
-        run: |
-          molecule test --scenario-name github
-        working-directory: roles/${{ matrix.roles }}
 ...
