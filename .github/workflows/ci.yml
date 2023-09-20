@@ -4,8 +4,8 @@ on:
   push:
 
 jobs:
-  integration_testing:
-    name: Test Collection Openstack Roles
+  unit_test:
+    name: Build and Install Collection
     runs-on: ubuntu-latest
     strategy:
       matrix:

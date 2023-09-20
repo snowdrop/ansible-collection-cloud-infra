@@ -6,7 +6,7 @@ on:
 
 jobs:
   integration_testing:
-    name: Test Collection Openstack Roles
+    name: Build and Install Collection
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -44,7 +44,7 @@ jobs:
       - name: Install Ansible Collection
         run: |
           pwd
-          ansible-galaxy collection install build/snowdrop-cloud_infra-$(yq -r .version ansible/ansible_collections/snowdrop/cloud_infra/galaxy.yml).tar.gz --upgrade -p $HOME/.ansible/collections
+          ansible-galaxy collection install build/snowdrop-cloud_infra-$(yq -r .version galaxy.yml).tar.gz --upgrade -p $HOME/.ansible/collections
 
       - name: Run tests
         run: |
