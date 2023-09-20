@@ -1,38 +1,63 @@
-Role Name
-=========
+# Role: OpenStack VM
 
 Manages OpenStack VMs.
 
-Requirements
-------------
+## Description
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+This role will provision and remove OpenStack VMs.
 
-Role Variables
---------------
+## Requirements
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+Ansible Collections:
 
-Dependencies
-------------
+```yaml
+collections:
+  - name: openstack.cloud
+    version: 2.1.0
+```
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+## Role Variables
 
-Example Playbook
-----------------
+OpenStack VM role required parameters
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+| Parameter   | Comments                          |
+|-----------------|--------|
+| `openstack_auth` <br/><span style="color:fuchsia">map</span> / <span style="color:red">required</span> | Map with the authentication |
+| `openstack_security_group` <br/><span style="color:fuchsia">string</span> / <span style="color:red">required</span> | Security group |
+| `state` <br/><span style="color:fuchsia">string</span> / <span style="color:red">required</span> | State of the VM <br/> * `present` <br/> * `absent` |
+| `vm_name` <br/><span style="color:fuchsia">string</span> / <span style="color:red">required</span> | Name of the VM to be created |
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+For the `openstack_auth` Map parameter, the required contents are the following.
 
-License
--------
+| Name  | Comments                          |
+|-------|-----------------------------------|
+| `openstack_project_name` <br/><span style="color:fuchsia">string</span> / <span style="color:red">required</span> | Tenant domain |
+| `openstack_console_user` <br/><span style="color:fuchsia">string</span> / <span style="color:red">required</span> | Console login user |
+| `openstack_console_password` <br/><span style="color:fuchsia">string</span> / <span style="color:red">required</span> | Console login user |
+| `openstack_user_domain`      <br/><span style="color:fuchsia">string</span> / <span style="color:red">required</span> | User domain |
+| `openstack_project_domain`   <br/><span style="color:fuchsia">string</span> / <span style="color:red">required</span> | Project domain |
+| `openstack_os_auth_url`      <br/><span style="color:fuchsia">string</span> / <span style="color:red">required</span> | Service authentication URL |
 
-BSD
+## Example Playbook
 
-Author Information
-------------------
+```yaml
+- name: "Create VM on OpenStack"
+  hosts: localhost
+  gather_facts: True
 
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+  tasks:
+    - name: "Create VM"
+      ansible.builtin.include_role:
+        name: "snowdrop.cloud_infra.openstack_vm"
+        vars:
+          state: present
+          vm_name: snowdrop-vm
+```
+
+## License
+
+[Apache License 2.0](#)
+
+## Author Information
+
+This role has been created by the [Snowdrop team](https://github.com/snowdrop/).
