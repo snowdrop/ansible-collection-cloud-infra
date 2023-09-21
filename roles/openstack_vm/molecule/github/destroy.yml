@@ -10,15 +10,16 @@
       ansible.builtin.set_fact:
         vm_name: ansible_molecule_snowdrop_openstack_test
 
-    # - name: "Set openstack_auth facts"
-    #   ansible.builtin.set_fact:
-    #     openstack_auth: 
-    #       openstack_project_name: "default"
-    #       openstack_console_user:  "admin"
-    #       openstack_console_password: "admin"
-    #       openstack_user_domain:  "default"
-    #       openstack_project_domain: "default"
-    #       openstack_os_auth_url: "https://localhost:13000/"
+    - name: Set authentication vars
+      ansible.builtin.set_fact:
+        rhos_auth:
+          auth_url: "{{ openstack_auth.openstack_os_auth_url }}"
+          password: "{{ openstack_auth.openstack_console_password }}"
+          project_domain_name: "{{ openstack_auth.openstack_project_domain }}"
+          project_name: "{{ openstack_auth.openstack_project_name }}"
+          username: "{{ openstack_auth.openstack_console_user }}"
+          user_domain_name: "{{ openstack_auth.openstack_user_domain }}"
+        rhos_auth_type: v3password
 
     - name: Include default vars
       ansible.builtin.include_vars:

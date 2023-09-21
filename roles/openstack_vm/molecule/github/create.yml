@@ -15,15 +15,21 @@
         file: defaults/main.yml
         # name: role_defaults
 
-    - name: List all images
-      openstack.cloud.image_info:
-        auth:
+    - name: Set authentication vars
+      ansible.builtin.set_fact:
+        rhos_auth:
+          auth_url: "{{ openstack_auth.openstack_os_auth_url }}"
+          password: "{{ openstack_auth.openstack_console_password }}"
+          project_domain_name: "{{ openstack_auth.openstack_project_domain }}"
           project_name: "{{ openstack_auth.openstack_project_name }}"
           username: "{{ openstack_auth.openstack_console_user }}"
-          password: "{{ openstack_auth.openstack_console_password }}"
           user_domain_name: "{{ openstack_auth.openstack_user_domain }}"
-          project_domain_name: "{{ openstack_auth.openstack_project_domain }}"
-          auth_url: "{{ openstack_auth.openstack_os_auth_url }}"
+        rhos_auth_type: v3password
+
+    - name: List all images
+      openstack.cloud.image_info:
+        auth: "{{ rhos_auth }}"
+        auth_type: "{{ rhos_auth_type }}"
       register: rhos_image_list
 
     - name: Print RHOS images
@@ -32,13 +38,8 @@
 
     - name: List all flavors
       openstack.cloud.compute_flavor_info:
-        auth:
-          project_name: "{{ openstack_auth.openstack_project_name }}"
-          username: "{{ openstack_auth.openstack_console_user }}"
-          password: "{{ openstack_auth.openstack_console_password }}"
-          user_domain_name: "{{ openstack_auth.openstack_user_domain }}"
-          project_domain_name: "{{ openstack_auth.openstack_project_domain }}"
-          auth_url: "{{ openstack_auth.openstack_os_auth_url }}"
+        auth: "{{ rhos_auth }}"
+        auth_type: "{{ rhos_auth_type }}"
       register: rhos_flavor_list
 
     - name: Print RHOS flavors
@@ -47,13 +48,8 @@
 
     - name: List all networks
       openstack.cloud.networks_info:
-        auth:
-          project_name: "{{ openstack_auth.openstack_project_name }}"
-          username: "{{ openstack_auth.openstack_console_user }}"
-          password: "{{ openstack_auth.openstack_console_password }}"
-          user_domain_name: "{{ openstack_auth.openstack_user_domain }}"
-          project_domain_name: "{{ openstack_auth.openstack_project_domain }}"
-          auth_url: "{{ openstack_auth.openstack_os_auth_url }}"
+        auth: "{{ rhos_auth }}"
+        auth_type: "{{ rhos_auth_type }}"
       register: rhos_network_list
 
     - name: Print RHOS networks
@@ -62,13 +58,8 @@
 
     - name: List all security groups
       openstack.cloud.security_group_info:
-        auth:
-          project_name: "{{ openstack_auth.openstack_project_name }}"
-          username: "{{ openstack_auth.openstack_console_user }}"
-          password: "{{ openstack_auth.openstack_console_password }}"
-          user_domain_name: "{{ openstack_auth.openstack_user_domain }}"
-          project_domain_name: "{{ openstack_auth.openstack_project_domain }}"
-          auth_url: "{{ openstack_auth.openstack_os_auth_url }}"
+        auth: "{{ rhos_auth }}"
+        auth_type: "{{ rhos_auth_type }}"
       register: rhos_security_group_list
 
     - name: Print RHOS security groups
