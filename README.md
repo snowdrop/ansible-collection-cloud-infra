@@ -1,4 +1,12 @@
+
 # Ansible Collection - snowdrop.cloud_infra
+
+![](https://github.com/snowdrop/ansible-collection-cloud-infra/actions/workflows/pr.yml/badge.svg)
+![](https://img.shields.io/github/release/snowdrop/ansible-collection-cloud-infra.svg)
+![](https://img.shields.io/github/release-date/snowdrop/ansible-collection-cloud-infra.svg)
+![](https://img.shields.io/github/repo-size/snowdrop/ansible-collection-cloud-infra.svg)
+![](https://img.shields.io/github/license/snowdrop/ansible-collection-cloud-infra.svg)
+
 
 Cloud infrastructure provisioning.
 
