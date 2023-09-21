@@ -18,14 +18,6 @@ collections:
 
 OpenStack VM role required parameters
 
-${\color{red}Required}$
-
-$\textcolor{magenta}{\textsf{Should be magenta}}$
-
-$\textcolor{fuchsia}{\textsf{Should be fuchsia}}$
-
-$\color{red}{\textsf{lorem ipsum}}$
-
 | Parameter | Comments   |
 |-----------|------------|
 | `rhos_auth` <br/> $\color{fuchsia}{\textsf{map}}$ / $\color{red}{\textsf{required}}$ | Map with the authentication |
