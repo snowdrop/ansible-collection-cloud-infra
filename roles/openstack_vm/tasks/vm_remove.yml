@@ -1,13 +1,15 @@
 ---
 - name: "Get VM information"
   openstack.cloud.server_info:
-    auth:
-      project_name: "{{ openstack_auth.openstack_project_name }}"
-      username: "{{ openstack_auth.openstack_console_user }}"
-      password: "{{ openstack_auth.openstack_console_password }}"
-      user_domain_name: "{{ openstack_auth.openstack_user_domain }}"
-      project_domain_name: "{{ openstack_auth.openstack_project_domain }}"
-      auth_url: "{{ openstack_auth.openstack_os_auth_url }}"
+    auth_type: "{{ rhos_auth_type }}"
+    auth: "{{ rhos_auth }}"
+    # auth:
+    #   project_name: "{{ openstack_auth.openstack_project_name }}"
+    #   username: "{{ openstack_auth.openstack_console_user }}"
+    #   password: "{{ openstack_auth.openstack_console_password }}"
+    #   user_domain_name: "{{ openstack_auth.openstack_user_domain }}"
+    #   project_domain_name: "{{ openstack_auth.openstack_project_domain }}"
+    #   auth_url: "{{ openstack_auth.openstack_os_auth_url }}"
     name: "{{ vm_name }}"
   register: openstack_server_info_output
   ignore_errors: true
@@ -19,13 +21,15 @@
 
 - name: "Delete VM {{ vm_name }}"
   os_server:
-    auth:
-      project_name: "{{ openstack_auth.openstack_project_name }}"
-      username: "{{ openstack_auth.openstack_console_user }}"
-      password: "{{ openstack_auth.openstack_console_password }}"
-      user_domain_name: "{{ openstack_auth.openstack_user_domain }}"
-      project_domain_name: "{{ openstack_auth.openstack_project_domain }}"
-      auth_url: "{{ openstack_auth.openstack_os_auth_url }}"
+    auth_type: "{{ rhos_auth_type }}"
+    auth: "{{ rhos_auth }}"
+    # auth:
+    #   project_name: "{{ openstack_auth.openstack_project_name }}"
+    #   username: "{{ openstack_auth.openstack_console_user }}"
+    #   password: "{{ openstack_auth.openstack_console_password }}"
+    #   user_domain_name: "{{ openstack_auth.openstack_user_domain }}"
+    #   project_domain_name: "{{ openstack_auth.openstack_project_domain }}"
+    #   auth_url: "{{ openstack_auth.openstack_os_auth_url }}"
     name: "{{ vm_name }}"
     state: "absent"
   register: openstack_output
@@ -34,13 +38,15 @@
 
 - name: "Delete VM volume"
   openstack.cloud.volume:
-    auth:
-      project_name: "{{ openstack_auth.openstack_project_name }}"
-      username: "{{ openstack_auth.openstack_console_user }}"
-      password: "{{ openstack_auth.openstack_console_password }}"
-      user_domain_name: "{{ openstack_auth.openstack_user_domain }}"
-      project_domain_name: "{{ openstack_auth.openstack_project_domain }}"
-      auth_url: "{{ openstack_auth.openstack_os_auth_url }}"
+    auth_type: "{{ rhos_auth_type }}"
+    auth: "{{ rhos_auth }}"
+    # auth:
+    #   project_name: "{{ openstack_auth.openstack_project_name }}"
+    #   username: "{{ openstack_auth.openstack_console_user }}"
+    #   password: "{{ openstack_auth.openstack_console_password }}"
+    #   user_domain_name: "{{ openstack_auth.openstack_user_domain }}"
+    #   project_domain_name: "{{ openstack_auth.openstack_project_domain }}"
+    #   auth_url: "{{ openstack_auth.openstack_os_auth_url }}"
     display_name: "{{ volume_name_iterator }}"
     state: absent
   ignore_errors: true
@@ -52,13 +58,15 @@
 - name: "Delete key {{ vm_name }} from server"
   os_keypair:
     state: absent
-    auth:
-      project_name: "{{ openstack_auth.openstack_project_name }}"
-      username: "{{ openstack_auth.openstack_console_user }}"
-      password: "{{ openstack_auth.openstack_console_password }}"
-      user_domain_name: "{{ openstack_auth.openstack_user_domain }}"
-      project_domain_name: "{{ openstack_auth.openstack_project_domain }}"
-      auth_url: "{{ openstack_auth.openstack_os_auth_url }}"
+    auth_type: "{{ rhos_auth_type }}"
+    auth: "{{ rhos_auth }}"
+    # auth:
+    #   project_name: "{{ openstack_auth.openstack_project_name }}"
+    #   username: "{{ openstack_auth.openstack_console_user }}"
+    #   password: "{{ openstack_auth.openstack_console_password }}"
+    #   user_domain_name: "{{ openstack_auth.openstack_user_domain }}"
+    #   project_domain_name: "{{ openstack_auth.openstack_project_domain }}"
+    #   auth_url: "{{ openstack_auth.openstack_os_auth_url }}"
     name: "{{ vm_name }}"
   ignore_errors: true
 

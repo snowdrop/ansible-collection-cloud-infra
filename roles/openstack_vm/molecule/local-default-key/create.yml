@@ -25,17 +25,29 @@
 
     - name: "Set openstack_auth facts"
       ansible.builtin.set_fact:
-        openstack_auth: 
-          openstack_project_name: "{{ query('passwordstore', 'openstack/host/project_name')[0] }}"
-          openstack_console_user:  "{{ query('passwordstore', 'openstack/host/console_user')[0] }}"
-          openstack_console_password: "{{ query('passwordstore', 'openstack/host/console_pw')[0] }}"
-          openstack_user_domain:  "{{ query('passwordstore', 'openstack/host/console_domain')[0] }}"
-          openstack_project_domain: "{{ query('passwordstore', 'openstack/host/os_domain')[0] }}"
-          openstack_os_auth_url: "{{ query('passwordstore', 'openstack/host/os_auth_url')[0] }}"
+        rhos_auth_pw_type: v3password
+        rhos_auth_pw: 
+          project_name: "{{ query('passwordstore', 'openstack/host/project_name')[0] }}"
+          username:  "{{ query('passwordstore', 'openstack/host/console_user')[0] }}"
+          password: "{{ query('passwordstore', 'openstack/host/console_pw')[0] }}"
+          user_domain_name:  "{{ query('passwordstore', 'openstack/host/console_domain')[0] }}"
+          project_domain_name: "{{ query('passwordstore', 'openstack/host/os_domain')[0] }}"
+          auth_url: "{{ query('passwordstore', 'openstack/host/os_auth_url')[0] }}"
+
+    - name: Set authentication vars
+      ansible.builtin.set_fact:
+        rhos_auth:
+          auth_url: "{{ rhos_auth_pw.auth_url }}"
+          project_name: "{{ query('passwordstore', 'openstack/host/project_name')[0] }}"
+          username: "{{ query('passwordstore', 'openstack/host/console_user')[0] }}"
+          password: "{{ query('passwordstore', 'openstack/host/console_pw')[0] }}"
+          user_domain_name: "{{ query('passwordstore', 'openstack/host/console_domain')[0] }}"
+          project_domain_name: "{{ query('passwordstore', 'openstack/host/os_domain')[0] }}"
+          # token: "{{ rhos_auth_res.auth_token }}"
+        # v3token
+        rhos_auth_type: v3password
 
   tasks:
-
-    # TODO: Developer must implement and populate 'server' variable
 
     - name: "Create VM"
       ansible.builtin.include_role:

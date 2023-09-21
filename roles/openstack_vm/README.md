@@ -20,23 +20,34 @@ collections:
 
 OpenStack VM role required parameters
 
-| Parameter   | Comments                          |
-|-----------------|--------|
-| `openstack_auth` <br/><span style="color:fuchsia">map</span> / <span style="color:red">required</span> | Map with the authentication |
+| Parameter | Comments   |
+|-----------|------------|
+| `rhos_auth` <br/><span style="color:fuchsia">map</span> / <span style="color:red">required</span> | Map with the authentication |
+| `rhos_auth_type` <br/><span style="color:fuchsia">string</span> / <span style="color:red">required</span> | RHOS Authentication type  <sup>1)</sup> |
 | `openstack_security_group` <br/><span style="color:fuchsia">string</span> / <span style="color:red">required</span> | Security group |
 | `state` <br/><span style="color:fuchsia">string</span> / <span style="color:red">required</span> | State of the VM <br/> * `present` <br/> * `absent` |
 | `vm_name` <br/><span style="color:fuchsia">string</span> / <span style="color:red">required</span> | Name of the VM to be created |
 
-For the `openstack_auth` Map parameter, the required contents are the following.
+<sup>1)</sup> More information on the available keystone plugins on the 
+[RHOS documentation](https://docs.openstack.org/keystoneauth/latest/plugin-options.html#available-plugins).
+ 
+The `rhos_auth` Map parameter must contain the required attributes for a successfull 
+ authentication as selected with the `rhos_auth_type` variable. 
+ 
+For a `v3password` authentication the required contents are the following.
 
 | Name  | Comments                          |
 |-------|-----------------------------------|
-| `openstack_project_name` <br/><span style="color:fuchsia">string</span> / <span style="color:red">required</span> | Tenant domain |
-| `openstack_console_user` <br/><span style="color:fuchsia">string</span> / <span style="color:red">required</span> | Console login user |
-| `openstack_console_password` <br/><span style="color:fuchsia">string</span> / <span style="color:red">required</span> | Console login user |
-| `openstack_user_domain`      <br/><span style="color:fuchsia">string</span> / <span style="color:red">required</span> | User domain |
-| `openstack_project_domain`   <br/><span style="color:fuchsia">string</span> / <span style="color:red">required</span> | Project domain |
-| `openstack_os_auth_url`      <br/><span style="color:fuchsia">string</span> / <span style="color:red">required</span> | Service authentication URL |
+| `auth_url`      <br/><span style="color:fuchsia">string</span> / <span style="color:red">required</span> | Service authentication URL |
+| `password` <br/><span style="color:fuchsia">string</span> / <span style="color:red">required</span> | Console login user |
+| `project_domain_name`   <br/><span style="color:fuchsia">string</span> / <span style="color:red">required</span> | Project domain |
+| `project_name` <br/><span style="color:fuchsia">string</span> / <span style="color:red">required</span> | Tenant domain |
+| `user_domain_name`      <br/><span style="color:fuchsia">string</span> / <span style="color:red">required</span> | User domain |
+| `username` <br/><span style="color:fuchsia">string</span> / <span style="color:red">required</span> | Console login user |
+
+Output: 
+* `openstack_vm_ipv4`
+* `openstack_output`
 
 ## Example Playbook
 
@@ -56,7 +67,7 @@ For the `openstack_auth` Map parameter, the required contents are the following.
 
 ## License
 
-[Apache License 2.0](#)
+Apache License 2.0
 
 ## Author Information
 

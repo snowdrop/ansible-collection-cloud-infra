@@ -1,4 +1,5 @@
 default_generic_key_name: snowdrop-adm-key
+rhos_auth_type: v3password
 
 hostname: openstackVM
 type: cloude
