@@ -48,6 +48,7 @@ jobs:
 
       - name: Run role tests
         run: |
+          cat tasks/vm_create.yml
           molecule test --scenario-name github
         working-directory: roles/${{ matrix.roles }}
 ...

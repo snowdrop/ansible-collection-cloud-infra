@@ -1,13 +1,17 @@
 ---
 - name: "Print required information"
-  debug: 
+  ansible.builtin.debug: 
+    msg: "Version: {{ role_version }}"
+
+- name: "Print required information"
+  ansible.builtin.debug: 
     msg:
       - "vm_name: {{ vm_name }}"
   when: "vm_name is defined"
 
-- include_tasks: vm_create.yml
+- ansible.builtin.include_tasks: vm_create.yml
   when: "state is defined and state == 'present'"
 
-- include_tasks: vm_remove.yml
+- ansible.builtin.include_tasks: vm_remove.yml
   when: "state is defined and state == 'absent'"
 ...
