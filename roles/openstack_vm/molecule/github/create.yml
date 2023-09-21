@@ -13,7 +13,6 @@
     - name: Include default vars
       ansible.builtin.include_vars:
         file: defaults/main.yml
-        # name: role_defaults
 
     - name: Set authentication vars
       ansible.builtin.set_fact:

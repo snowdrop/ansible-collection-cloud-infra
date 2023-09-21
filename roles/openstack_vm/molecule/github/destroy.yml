@@ -10,6 +10,10 @@
       ansible.builtin.set_fact:
         vm_name: ansible_molecule_snowdrop_openstack_test
 
+    - name: Include default vars
+      ansible.builtin.include_vars:
+        file: defaults/main.yml
+
     - name: Set authentication vars
       ansible.builtin.set_fact:
         rhos_auth:
