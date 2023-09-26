@@ -1,0 +1,38 @@
+---
+name: CI
+on:
+  push:
+
+jobs:
+  unit_test:
+    name: Build and Install Collection
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: [ 3.11 ]
+        roles: [openstack_vm]
+
+    steps:
+
+      - name: Checkout project
+        uses: actions/checkout@v3
+
+      - name: Install Python
+        uses: actions/setup-python@v4 
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+
+      - name: Install python requirements
+        run: pip install -r requirements.txt
+
+      - name: Build Ansible Collection
+        run: |
+          pwd
+          ansible-galaxy collection build . --output build/ --force
+
+      - name: Install Ansible Collection
+        run: |
+          ansible-galaxy collection install build/snowdrop-cloud_infra-$(yq -r .version galaxy.yml).tar.gz --upgrade
+
+...
