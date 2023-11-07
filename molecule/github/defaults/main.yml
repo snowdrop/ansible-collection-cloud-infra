@@ -29,3 +29,4 @@ openstack_auth:
   openstack_os_auth_url: "http://localhost/identity/"
 
 openstack_vm_flavor: m1.small
+openstack_vm_auto_floating_ip: true
