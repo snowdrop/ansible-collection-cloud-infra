@@ -81,7 +81,7 @@
       state: "{{ state }}"
       timeout: "{{ openstack.timeout | default(openstack_defaults.timeout) }}"
       flavor: "{{ openstack.vm.flavor }}"
-      auto_floating_ip: yes
+      auto_floating_ip: "{{ openstack_vm_auto_floating_ip }}"
       network: "{{ openstack.vm.network | default('') }}"
       security_groups: "{{ openstack_security_group }}"
       boot_from_volume: "{{ openstack.vm.boot_from_volume | default(false) }}"

@@ -18,7 +18,7 @@ collections:
 
 ## Role Variables
 
-OpenStack VM role required parameters
+OpenStack VM role parameters
 
 | Parameter | Comments   |
 |-----------|------------|
@@ -27,6 +27,7 @@ OpenStack VM role required parameters
 | `openstack_security_group` <br/>$\color{fuchsia}{\textsf{map}}$ / $\color{red}{\textsf{required}}$ | Security group |
 | `state` <br/>$\color{fuchsia}{\textsf{map}}$ / $\color{red}{\textsf{required}}$ | State of the VM <br/> * `present` <br/> * `absent` |
 | `vm_name` <br/>$\color{fuchsia}{\textsf{map}}$ / $\color{red}{\textsf{required}}$ | Name of the VM to be created |
+| `openstack_vm_auto_floating_ip` <br/>$\color{fuchsia}{\textsf{string}}$ | Auto associate a Floating IP <br/> * **`false` <= Default** <br/> * `true` |
 
 <sup>1)</sup> More information on the available keystone plugins on the 
 [RHOS documentation](https://docs.openstack.org/keystoneauth/latest/plugin-options.html#available-plugins).
