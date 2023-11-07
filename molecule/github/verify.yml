@@ -42,7 +42,7 @@
     - name: "Validate server IPV4"
       ansible.builtin.assert:
         that:
-          - openstack_server_info_output.servers[0].access_ipv4 is defined and openstack_server_info_output.servers[0].access_ipv4 | length > 0
+          - openstack_vm_ipv4 is defined and openstack_vm_ipv4 | length > 0
         msg: "Openstack server must have an IPV4. "
 
     - name: "Validate server flavor"

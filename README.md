@@ -12,71 +12,50 @@ Cloud infrastructure provisioning.
 
 * Manages OpenStack VMs
 
-## Requirements
+## Ansible compatibility
 
-Ansible Collections:
+This collection has been tested against Ansible `2.9.10`.
+
+## Installation
+
+To use this collection it must be first installed.
+
+This can performed by using the Ansible CLI directly.
+
+```bash
+ansible-galaxy collection install snowdrop.cloud_infra
+```
+
+Another way to install this collection is using a `requirements.yml` file. 
 
 ```yaml
+---
 collections:
-  - name: openstack.cloud
-    version: 2.1.0
+  - name: snowdrop.cloud_infra
 ```
 
-## Role Variables
+Then install the this file using the following command.
 
-OpenStack VM role required parameters
-
-| Parameter | Comments   |
-|-----------|------------|
-| `rhos_auth` <br/> $\color{fuchsia}{\textsf{map}}$ / $\color{red}{\textsf{required}}$ | Map with the authentication |
-| `rhos_auth_type` <br/>$\color{fuchsia}{\textsf{map}}$ / $\color{red}{\textsf{required}}$ | RHOS Authentication type  <sup>1)</sup> |
-| `openstack_security_group` <br/>$\color{fuchsia}{\textsf{map}}$ / $\color{red}{\textsf{required}}$ | Security group |
-| `state` <br/>$\color{fuchsia}{\textsf{map}}$ / $\color{red}{\textsf{required}}$ | State of the VM <br/> * `present` <br/> * `absent` |
-| `vm_name` <br/>$\color{fuchsia}{\textsf{map}}$ / $\color{red}{\textsf{required}}$ | Name of the VM to be created |
-
-<sup>1)</sup> More information on the available keystone plugins on the 
-[RHOS documentation](https://docs.openstack.org/keystoneauth/latest/plugin-options.html#available-plugins).
- 
-The `rhos_auth` Map parameter must contain the required attributes for a successfull 
- authentication as selected with the `rhos_auth_type` variable. 
- 
-For a `v3password` authentication the required contents are the following.
-
-| Name  | Comments                          |
-|-------|-----------------------------------|
-| `auth_url`      <br/>$\color{fuchsia}{\textsf{map}}$ / $\color{red}{\textsf{required}}$ | Service authentication URL |
-| `password` <br/>$\color{fuchsia}{\textsf{map}}$ / $\color{red}{\textsf{required}}$ | Console login user |
-| `project_domain_name`   <br/>$\color{fuchsia}{\textsf{map}}$ / $\color{red}{\textsf{required}}$ | Project domain |
-| `project_name` <br/>$\color{fuchsia}{\textsf{map}}$ / $\color{red}{\textsf{required}}$ | Tenant domain |
-| `user_domain_name`      <br/>$\color{fuchsia}{\textsf{map}}$ / $\color{red}{\textsf{required}}$ | User domain |
-| `username` <br/>$\color{fuchsia}{\textsf{map}}$ / $\color{red}{\textsf{required}}$ | Console login user |
-
-Output: 
-* `openstack_vm_ipv4`
-* `openstack_output`
-
-## Example
-
-Sample playbook:
-
-```yaml
-- name: "Create VM on OpenStack"
-  hosts: localhost
-  gather_facts: True
-
-  tasks:
-    - name: "Create VM"
-      ansible.builtin.include_role:
-        name: "snowdrop.cloud_infra.openstack_vm"
-        vars:
-          rhos_auth:
-            auth_url: 
-            project_name: 
-            username: 
-            password: 
-            user_domain_name: 
-            project_domain_name: 
-          rhos_auth_type: v3password
-          state: present
-          vm_name: snowdrop-vm
+```bash
+ansible-galaxy collection install -r requirements.yml --upgrade
 ```
+
+## Roles
+
+* [openstack_vm](roles/openstack_vm): provision OpenStack virtual machines
+
+## Usage
+
+To create a VM on an OpenStack project check the [`create_vm` playbook](playbooks/create_vm.yml).
+
+To remove a VM from an OpenStack project check the [`remove_vm` playbook](playbooks/create_vm.yml).
+
+## License
+
+Apache License 2.0
+
+Check the [LICENSE](LICENSE) to view the full text.
+
+## Author Information
+
+This role has been created by the [Snowdrop team](https://github.com/snowdrop/).

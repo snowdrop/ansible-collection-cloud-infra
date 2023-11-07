@@ -1,0 +1,11 @@
+- name: "Create VM on OpenStack"
+  hosts: localhost
+  gather_facts: True
+
+  tasks:
+    - name: "Create VM"
+      ansible.builtin.include_role:
+        name: "snowdrop.cloud_infra.openstack_vm"
+        vars:
+          state: present
+          vm_name: snowdrop-vm
