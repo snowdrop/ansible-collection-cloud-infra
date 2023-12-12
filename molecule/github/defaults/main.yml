@@ -10,7 +10,7 @@ openstack_defaults:
     image: Fedora-Cloud-Base-37
     key_name: "{{ hostname }}"
     flavor: m1.small
-    network: default_network
+    network: public
     security_group: default_security_group
     # Array of items with 2 attributes, name and size
     # volumes: []

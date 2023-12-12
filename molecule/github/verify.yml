@@ -15,16 +15,6 @@
         file: defaults/main.yml
         # name: role_defaults
 
-    - name: List all networks
-      openstack.cloud.networks_info:
-        auth: "{{ rhos_auth }}"
-        auth_type: "{{ rhos_auth_type }}"
-      register: rhos_network_list
-
-    - name: "Set openstack VM network fact"
-      ansible.builtin.set_fact:
-        openstack_vm_network: "{{ rhos_network_list.networks[0].name | default('') }}"
-        
   tasks:
 
     - name: "Get VM information"
@@ -52,7 +42,7 @@
 
     - name: "Collect host fixed IP v4 address"
       ansible.builtin.set_fact:
-        openstack_vm_ipv4_address: "{{ openstack_server_info_output.servers[0].addresses[ openstack_vm_network ] | community.general.json_query(type_n_version_query) }}"
+        openstack_vm_ipv4_address: "{{ openstack_server_info_output.servers[0].addresses[ openstack_defaults.vm.network ] | community.general.json_query(type_n_version_query) }}"
       vars:
         type_n_version_query: "[?\"OS-EXT-IPS:type\" == 'fixed' && version == `4`]"
 
