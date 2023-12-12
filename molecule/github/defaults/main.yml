@@ -1,4 +1,5 @@
 use_generic_ssh_key: false
+hostname: openstackVM
 
 openstack_defaults:
   os_project_name: spring-boot-jenkins
