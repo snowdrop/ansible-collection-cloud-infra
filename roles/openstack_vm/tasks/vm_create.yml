@@ -85,7 +85,6 @@
       network: "{{ openstack.vm.network | default('') }}"
       security_groups: "{{ openstack_security_group }}"
       boot_from_volume: "{{ openstack.vm.boot_from_volume | default(false) }}"
-      volumes: []
       userdata: |
         #cloud-config
         users:
