@@ -41,7 +41,9 @@
 
     - name: "Print OpenStack server information"
       ansible.builtin.debug:
-        var: openstack_server_info_output
+        msg: 
+          - "openstack_server_info_output: {{ openstack_server_info_output }}"
+          - "openstack_vm_ipv4: {{ openstack_vm_ipv4 }}"
 
     - name: "Validate server list"
       ansible.builtin.assert:
