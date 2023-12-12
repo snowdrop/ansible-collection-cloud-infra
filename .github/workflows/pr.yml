@@ -39,6 +39,11 @@ jobs:
           pip install -r requirements.txt
           pip install -r molecule/requirements.txt
 
+      - name: Print configuration versions
+        run: |
+          pip freeze
+          ansible-galaxy collection list
+          
       - name: Build Ansible Collection
         run: |
           pwd
