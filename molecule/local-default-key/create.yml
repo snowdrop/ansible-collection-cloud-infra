@@ -55,6 +55,10 @@
       vars: 
         state: "present"
 
+    - name: "Show IP addresses"
+      ansible.builtin.debug:
+        msg: "VM IP V4: {{ openstack_vm_ipv4 }}"
+
     - name: "Wait for connection to host"
       ansible.builtin.wait_for:
         host: "{{ openstack_vm_ipv4 }}"
