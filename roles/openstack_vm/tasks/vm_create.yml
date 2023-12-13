@@ -81,7 +81,7 @@
       state: "{{ state }}"
       timeout: "{{ openstack.timeout | default(openstack_defaults.timeout) }}"
       flavor: "{{ openstack.vm.flavor }}"
-      auto_floating_ip: yes
+      auto_floating_ip: "{{ openstack_vm_auto_floating_ip }}"
       network: "{{ openstack.vm.network | default('') }}"
       security_groups: "{{ openstack_security_group }}"
       boot_from_volume: "{{ openstack.vm.boot_from_volume | default(false) }}"
@@ -122,11 +122,23 @@
 
   - name: "Show VM network"
     ansible.builtin.debug:
-      msg: "VM network: {{ openstack_output.server.addresses[ openstack.vm.network ][0] }}"
+      msg: 
+        - "VM network: "
+        - " All - {{ openstack_output.server.addresses[ openstack.vm.network ] }}"
+        - " IPv4 - {{ openstack_output.server.addresses[ openstack.vm.network ] | community.general.json_query(type_n_version_query) }}"
+        - " IPv4 address - {{ openstack_output.server.addresses[ openstack.vm.network ] | community.general.json_query(type_n_version_query) }}"
+    vars:
+      type_n_version_query: "[?\"OS-EXT-IPS:type\" == 'fixed' && version == `4`]"
 
-  - name: "Collect host IP"
+  - name: "Collect host fixed IP v4"
     ansible.builtin.set_fact:
-      openstack_vm_ipv4: "{{ openstack_output.server.addresses[ openstack.vm.network ][0].addr }}"
+      openstack_vm_ipv4_address: "{{ openstack_output.server.addresses[ openstack.vm.network ] | community.general.json_query(type_n_version_query) }}"
+    vars:
+      type_n_version_query: "[?\"OS-EXT-IPS:type\" == 'fixed' && version == `4`]"
+
+  - name: "Collect host fixed IP v4 address "
+    ansible.builtin.set_fact:
+      openstack_vm_ipv4: "{{ openstack_vm_ipv4_address[0].addr }}"
 
   - name: "Show IP addresses"
     ansible.builtin.debug:

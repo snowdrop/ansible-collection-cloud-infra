@@ -69,7 +69,7 @@
       ansible.builtin.set_fact:
         openstack: 
           vm: 
-            network: "{{ rhos_network_list.networks[0].name | default('') }}"
+            network: "{{ openstack_defaults.vm.network }}"
             image: "{{ rhos_image_list.images[0].name | default(openstack_defaults.vm.image) }}"
             flavor: "{{ openstack_vm_flavor }}"
         openstack_security_group: "{{ rhos_security_group_list.security_groups[0].id | default('') }}"

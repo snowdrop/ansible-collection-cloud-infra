@@ -41,15 +41,8 @@
 
     - name: "Print OpenStack server information"
       ansible.builtin.debug:
-        var: openstack_server_info_output
-
-    # - name: "Validate OpenStack server info"
-    #   ansible.builtin.assert:
-    #     that:
-    #       - openstack_server_info_output.servers | length == 1
-    #       - openstack_server_info_output.servers[0].access_ipv4 is defined and openstack_server_info_output.servers[0].access_ipv4 | length > 0
-    #       - openstack_server_info_output.servers[0].flavor.name == openstack_defaults.vm.flavor
-    #       - openstack_server_info_output.servers[0].key_name == default_generic_key_name
+        msg: 
+          - "openstack_server_info_output: {{ openstack_server_info_output }}"
 
     - name: "Validate server list"
       ansible.builtin.assert:
@@ -57,10 +50,25 @@
           - openstack_server_info_output.servers | length == 1
         msg: "Openstack must output 1 and only 1 server. The result was {{ openstack_server_info_output.servers | length }} ({{ openstack_server_info_output.servers }}). "
 
+    - name: "Collect host fixed IPV4"
+      ansible.builtin.set_fact:
+        openstack_vm_ipv4_address: "{{ openstack_server_info_output.servers[0].addresses[ openstack_defaults.vm.network ] | community.general.json_query(type_n_version_query) }}"
+      vars:
+        type_n_version_query: "[?\"OS-EXT-IPS:type\" == 'fixed' && version == `4`]"
+
+    - name: "Print openstack_vm_ipv4_address"
+      ansible.builtin.debug:
+        msg: 
+          - "openstack_vm_ipv4_address: {{ openstack_vm_ipv4_address }}"
+
+    - name: "Extract host fixed IPV4 address "
+      ansible.builtin.set_fact:
+        openstack_vm_ipv4: "{{ openstack_vm_ipv4_address[0].addr }}"
+
     - name: "Validate server IPV4"
       ansible.builtin.assert:
         that:
-          - openstack_server_info_output.servers[0].access_ipv4 is defined and openstack_server_info_output.servers[0].access_ipv4 | length > 0
+          - openstack_vm_ipv4 is defined and openstack_vm_ipv4 | length > 0
         msg: "Openstack server must have an IPV4. "
 
     - name: "Validate server flavor"
@@ -75,7 +83,4 @@
           - openstack_server_info_output.servers[0].key_name == default_generic_key_name
         msg: "Server key must be the one requested. Obtained {{ openstack_server_info_output.servers[0].key_name }} but requested {{ default_generic_key_name }}."
 
-    # - name: Example assertion
-    #   ansible.builtin.assert:
-    #     that: true
 ...

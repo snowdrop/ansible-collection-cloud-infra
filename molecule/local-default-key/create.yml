@@ -19,7 +19,7 @@
       ansible.builtin.set_fact:
         openstack: 
           vm: 
-            network: "provider_net_shared"
+            network: "{{ openstack_defaults.vm.network }}"
             image: "{{ openstack_defaults.vm.image }}"
             flavor: "{{ openstack_defaults.vm.flavor }}"
 
@@ -54,6 +54,10 @@
         name: "openstack_vm"
       vars: 
         state: "present"
+
+    - name: "Show IP addresses"
+      ansible.builtin.debug:
+        msg: "VM IP V4: {{ openstack_vm_ipv4 }}"
 
     - name: "Wait for connection to host"
       ansible.builtin.wait_for:

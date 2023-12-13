@@ -31,12 +31,12 @@ openstack_defaults:
   sshkey_name: "{{ hostname }}"
   timeout: 60000
   vm:
-    title: Fedora 35 Cloud Base
+    title: Fedora 37 Cloud Base
     name: "{{ hostname }}"
-    image: Fedora-Cloud-Base-35
+    image: Fedora-Cloud-Base-37
     key_name: "{{ hostname }}"
-    flavor: m1.medium
-    network: default_network
+    flavor: m1.small
+    network: provider_net_shared
     security_group: default_security_group
     # Array of items with 2 attributes, name and size
     volumes: []

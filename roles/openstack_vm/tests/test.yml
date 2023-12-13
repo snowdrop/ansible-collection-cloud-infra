@@ -8,8 +8,8 @@
     openstack: 
       vm: 
         network: "provider_net_shared"
-        image: "Fedora-Cloud-Base-35"
-        flavor: "m1.medium"
+        image: "Fedora-Cloud-Base-37"
+        flavor: "m1.small"
 
 - name: "Set openstack_auth facts"
   set_fact:

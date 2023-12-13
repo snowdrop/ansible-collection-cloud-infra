@@ -35,8 +35,15 @@ jobs:
           cache: pip
 
       - name: Install python requirements
-        run: pip install -r requirements.txt
+        run: |
+          pip install -r requirements.txt
+          pip install -r molecule/requirements.txt
 
+      - name: Print configuration versions
+        run: |
+          pip freeze
+          ansible-galaxy collection list
+          
       - name: Build Ansible Collection
         run: |
           pwd
@@ -46,8 +53,13 @@ jobs:
         run: |
           ansible-galaxy collection install build/snowdrop-cloud_infra-$(yq -r .version galaxy.yml).tar.gz --upgrade -p $HOME/.ansible/collections
 
+      - name: Print configuration versions
+        run: |
+          pip freeze
+          ansible-galaxy collection list
+          
       - name: Run role tests
         run: |
           molecule test --scenario-name github
-        working-directory: roles/${{ matrix.roles }}
+        #working-directory: roles/${{ matrix.roles }}
 ...

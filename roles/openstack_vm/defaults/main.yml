@@ -48,3 +48,4 @@ openstack_defaults:
 
 # login_username: centos
 openstack_security_group: spring-boot
+openstack_vm_auto_floating_ip: false

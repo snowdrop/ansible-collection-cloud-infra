@@ -1,0 +1,11 @@
+- name: "Remove VM on OpenStack"
+  hosts: localhost
+  gather_facts: True
+
+  tasks:
+    - name: "Remove VM"
+      ansible.builtin.include_role:
+        name: "snowdrop.cloud_infra.openstack_vm"
+        vars:
+          state: absent
+          vm_name: snowdrop-vm
