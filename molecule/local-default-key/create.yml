@@ -19,7 +19,7 @@
       ansible.builtin.set_fact:
         openstack: 
           vm: 
-            network: "provider_net_shared"
+            network: "{{ openstack_defaults.vm.network }}"
             image: "{{ openstack_defaults.vm.image }}"
             flavor: "{{ openstack_defaults.vm.flavor }}"
 
