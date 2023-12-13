@@ -53,6 +53,11 @@ jobs:
         run: |
           ansible-galaxy collection install build/snowdrop-cloud_infra-$(yq -r .version galaxy.yml).tar.gz --upgrade -p $HOME/.ansible/collections
 
+      - name: Print configuration versions
+        run: |
+          pip freeze
+          ansible-galaxy collection list
+          
       - name: Run role tests
         run: |
           molecule test --scenario-name github
