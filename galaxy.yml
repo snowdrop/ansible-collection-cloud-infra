@@ -41,7 +41,7 @@ tags:
 # collection label 'namespace.name'. The value is a version range
 # L(specifiers,https://python-semanticversion.readthedocs.io/en/latest/#requirement-specification). Multiple version
 # range specifiers can be set and are separated by ','
-dependencies: {"openstack.cloud": ">=2.1.0,<2.2.0"}
+dependencies: {"openstack.cloud": ">=2.2.0"}
 
 # The URL of the originating SCM repository
 repository: https://github.com/snowdrop/ansible-collection-cloud-infra
